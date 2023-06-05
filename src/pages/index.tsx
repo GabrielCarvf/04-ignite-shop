@@ -1,7 +1,7 @@
-import { styled } from "../styles"
+import { styled } from '../styles'
 
 const Button = styled('button', {
-  backgroundColor: '$rocketseat',
+  backgroundColor: '$green300',
   border: 0,
   padding: '1rem',
   borderRadius: 5,
@@ -9,6 +9,8 @@ const Button = styled('button', {
 
 export default function Home() {
   return (
-    <Button> <h1>Teste do Next.js</h1></Button>
+    <Button>
+      <h1>Teste do Next.js</h1>
+    </Button>
   )
 }
