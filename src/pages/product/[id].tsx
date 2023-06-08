@@ -5,9 +5,10 @@ import {
   ProductDetails,
 } from '@/src/styles/pages/product'
 import { priceFormatter } from '@/src/utils/formatter'
+import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import Stripe from 'stripe'
 
 interface ProductProps {
@@ -17,14 +18,30 @@ interface ProductProps {
     imageUrl: string
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  const { isFallback } = useRouter()
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
 
-  if (isFallback) {
-    return <p>Loading....</p>
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (error) {
+      setIsCreatingCheckoutSession(false)
+      // Conectar com alguma ferramenta de observabilidade (Datadog / Sentry)
+      alert('Falha ao redirecionar ao checkout')
+    }
   }
 
   return (
@@ -38,7 +55,9 @@ export default function Product({ product }: ProductProps) {
 
         <p>{product.description}</p>
 
-        <button>Comprar agora</button>
+        <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
+          Comprar agora
+        </button>
       </ProductDetails>
     </ProductContainer>
   )
@@ -47,7 +66,7 @@ export default function Product({ product }: ProductProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [{ params: { id: 'prod_O26BqNTvw0buxI' } }],
-    fallback: true,
+    fallback: 'blocking',
   }
 }
 
@@ -70,6 +89,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         imageUrl: product.images[0],
         price: priceFormatter.format(price.unit_amount! / 100),
         description: product.description,
+        defaultPriceId: price.id,
       },
     },
     revalidate: 60 * 60 * 1, // 1 hour
