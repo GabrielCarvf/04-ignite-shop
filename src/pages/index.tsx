@@ -41,25 +41,19 @@ export default function Home({ products }: HomeProps) {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <Link
-              key={product.id}
-              href={`/product/${product.id}`}
-              prefetch={false}
-            >
-              <Product className="keen-slider__slide">
-                <Image src={product.imageUrl} alt="" width={520} height={480} />
+            <Product key={product.id} className="keen-slider__slide">
+              <Image src={product.imageUrl} alt="" width={520} height={480} />
 
-                <footer>
-                  <div>
-                    <strong>{product.name}</strong>
-                    <span>{product.price}</span>
-                  </div>
-                  <button>
-                    <Handbag weight="bold" size={32} />
-                  </button>
-                </footer>
-              </Product>
-            </Link>
+              <footer>
+                <Link href={`/product/${product.id}`} prefetch={false}>
+                  <strong>{product.name}</strong>
+                  <span>{product.price}</span>
+                </Link>
+                <button>
+                  <Handbag weight="bold" size={32} />
+                </button>
+              </footer>
+            </Product>
           )
         })}
       </HomeContainer>

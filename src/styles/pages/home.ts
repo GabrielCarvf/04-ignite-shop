@@ -39,10 +39,11 @@ export const Product = styled('div', {
     opacity: '0',
     transition: 'all 0.2s ease-in-out',
 
-    div: {
+    a: {
       display: 'flex',
       flexDirection: 'column',
       gap: '0.25rem',
+      textDecoration: 'none',
     },
 
     strong: {
