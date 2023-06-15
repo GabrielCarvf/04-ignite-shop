@@ -12,6 +12,8 @@ import Stripe from 'stripe'
 import { priceFormatter } from '../utils/formatter'
 import Head from 'next/head'
 import { Handbag } from '@phosphor-icons/react'
+import { useContext } from 'react'
+import { ShopCartContext } from '../context/ShopCartContext'
 
 interface HomeProps {
   products: {
@@ -23,6 +25,7 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
+  const { addProductToCart } = useContext(ShopCartContext)
   const [sliderRef] = useKeenSlider({
     loop: true,
     slides: {
@@ -31,6 +34,10 @@ export default function Home({ products }: HomeProps) {
       spacing: 48,
     },
   })
+
+  function handleAddProductToCart(product) {
+    addProductToCart(product)
+  }
 
   return (
     <>
@@ -45,11 +52,11 @@ export default function Home({ products }: HomeProps) {
               <Image src={product.imageUrl} alt="" width={520} height={480} />
 
               <footer>
-                <Link href={`/product/${product.id}`} prefetch={false}>
+                <Link href={`/product/${product.id}`}>
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
                 </Link>
-                <button>
+                <button onClick={() => handleAddProductToCart(product)}>
                   <Handbag weight="bold" size={32} />
                 </button>
               </footer>

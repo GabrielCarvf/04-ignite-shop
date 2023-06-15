@@ -1,4 +1,9 @@
+import Image from 'next/image'
+import { useContext, useEffect, useState } from 'react'
+import { ShopCartContext } from '../context/ShopCartContext'
+
 import { X } from '@phosphor-icons/react'
+
 import {
   AmountInfoContainer,
   Content,
@@ -10,14 +15,33 @@ import {
   SidebarContainer,
   ValueInfoContainer,
 } from '../styles/components/sidebar'
-import Image from 'next/image'
-import camisetaImg from '../assets/camisetas/1.png'
+import { priceFormatter } from '../utils/formatter'
 
 export default function Sidebar() {
+  const [amount, setAmount] = useState(0)
+  const { shopCartIsVisible, shopCartProducts, hideShopCart } =
+    useContext(ShopCartContext)
+
+  function handleHideSideBar() {
+    hideShopCart()
+  }
+
+  // useEffect(() => {
+  //   shopCartProducts.forEach((product) => {
+  //     amount += parseFloat(product.price.replace('R$', '').replace(',', '.'))
+  //   })
+
+  //   setAmount((state) => {
+  //     return (state += parseFloat(
+  //       .price.replace('R$', '').replace(',', '.'),
+  //     ))
+  //   })
+  // })
+
   return (
-    <SidebarContainer>
+    <SidebarContainer hidden={!shopCartIsVisible}>
       <header>
-        <button>
+        <button onClick={handleHideSideBar}>
           <X size={24} />
         </button>
       </header>
@@ -25,77 +49,36 @@ export default function Sidebar() {
       <Content>
         <ProductsContainer>
           <h1>Sacola de compras</h1>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
-          <Product>
-            <ImageContainer>
-              <Image src={camisetaImg} alt="" width={101} height={93} />
-            </ImageContainer>
-            <div>
-              <p>Camiseta Beyond the Limits</p>
-              <span>R$ 79,90</span>
-              <button>Remover</button>
-            </div>
-          </Product>
+          {shopCartProducts.map((product) => {
+            return (
+              <Product key={product.id}>
+                <ImageContainer>
+                  <Image
+                    src={product.imageUrl}
+                    alt=""
+                    width={101}
+                    height={93}
+                  />
+                </ImageContainer>
+                <div>
+                  <p>{product.name}</p>
+                  <span>{product.price}</span>
+                  <button>Remover</button>
+                </div>
+              </Product>
+            )
+          })}
         </ProductsContainer>
 
         <Footer>
           <InfosContainer>
             <AmountInfoContainer>
               <span>Quantidade</span>
-              <span>3 itens</span>
+              <span>{shopCartProducts.length} itens</span>
             </AmountInfoContainer>
             <ValueInfoContainer>
               <span>Valor Total</span>
-              <strong>R$ 270,00</strong>
+              <strong>{priceFormatter.format(amount)}</strong>
             </ValueInfoContainer>
           </InfosContainer>
           <button>Finalizar compra</button>

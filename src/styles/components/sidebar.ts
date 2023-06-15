@@ -35,9 +35,21 @@ export const SidebarContainer = styled('div', {
     },
   },
 
+  transition: 'all 0.2s ease-in-out',
+
   h1: {
     fontSize: '1.25rem',
     fontWeight: 'bold',
+  },
+
+  variants: {
+    hidden: {
+      true: {
+        transform: 'translateX(110%)',
+        opacity: '0',
+        transition: 'all 0.2s ease-in-out',
+      },
+    },
   },
 })
 
