@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { ShopCartContext } from '../context/ShopCartContext'
 
 import { X } from '@phosphor-icons/react'
@@ -18,25 +18,21 @@ import {
 import { priceFormatter } from '../utils/formatter'
 
 export default function Sidebar() {
-  const [amount, setAmount] = useState(0)
-  const { shopCartIsVisible, shopCartProducts, hideShopCart } =
-    useContext(ShopCartContext)
+  const {
+    shopCartIsVisible,
+    shopCartProducts,
+    totalValue,
+    hideShopCart,
+    removeProductToCart,
+  } = useContext(ShopCartContext)
 
   function handleHideSideBar() {
     hideShopCart()
   }
 
-  // useEffect(() => {
-  //   shopCartProducts.forEach((product) => {
-  //     amount += parseFloat(product.price.replace('R$', '').replace(',', '.'))
-  //   })
-
-  //   setAmount((state) => {
-  //     return (state += parseFloat(
-  //       .price.replace('R$', '').replace(',', '.'),
-  //     ))
-  //   })
-  // })
+  function handleRemoveProductToCart(product) {
+    removeProductToCart(product)
+  }
 
   return (
     <SidebarContainer hidden={!shopCartIsVisible}>
@@ -51,7 +47,7 @@ export default function Sidebar() {
           <h1>Sacola de compras</h1>
           {shopCartProducts.map((product) => {
             return (
-              <Product key={product.id}>
+              <Product key={product.uniqueKey}>
                 <ImageContainer>
                   <Image
                     src={product.imageUrl}
@@ -63,7 +59,9 @@ export default function Sidebar() {
                 <div>
                   <p>{product.name}</p>
                   <span>{product.price}</span>
-                  <button>Remover</button>
+                  <button onClick={() => handleRemoveProductToCart(product)}>
+                    Remover
+                  </button>
                 </div>
               </Product>
             )
@@ -78,7 +76,7 @@ export default function Sidebar() {
             </AmountInfoContainer>
             <ValueInfoContainer>
               <span>Valor Total</span>
-              <strong>{priceFormatter.format(amount)}</strong>
+              <strong>{priceFormatter.format(totalValue)}</strong>
             </ValueInfoContainer>
           </InfosContainer>
           <button>Finalizar compra</button>

@@ -7,7 +7,7 @@ import { ShopCartContext } from '../context/ShopCartContext'
 import { useContext } from 'react'
 
 export default function Header() {
-  const { showShopCart } = useContext(ShopCartContext)
+  const { showShopCart, shopCartProducts } = useContext(ShopCartContext)
 
   function handleShowShopCart() {
     showShopCart()
@@ -16,7 +16,9 @@ export default function Header() {
   return (
     <HeaderContainer>
       <Image src={logoImg} alt="" />
+
       <button onClick={handleShowShopCart}>
+        <div data-after={shopCartProducts.length}></div>
         <Handbag weight="bold" size={24} />
       </button>
     </HeaderContainer>

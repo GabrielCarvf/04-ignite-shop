@@ -14,6 +14,7 @@ import Head from 'next/head'
 import { Handbag } from '@phosphor-icons/react'
 import { useContext } from 'react'
 import { ShopCartContext } from '../context/ShopCartContext'
+import { v4 as uuidv4 } from 'uuid'
 
 interface HomeProps {
   products: {
@@ -36,7 +37,7 @@ export default function Home({ products }: HomeProps) {
   })
 
   function handleAddProductToCart(product) {
-    addProductToCart(product)
+    addProductToCart({ ...product, uniqueKey: uuidv4() })
   }
 
   return (

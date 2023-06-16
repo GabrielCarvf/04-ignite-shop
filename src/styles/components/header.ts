@@ -11,9 +11,13 @@ export const HeaderContainer = styled('header', {
   margin: '0 auto',
 
   button: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
     padding: '0.75rem',
     backgroundColor: '$gray800',
-    'border-radius': '6px',
+    borderRadius: '6px',
     color: '$gray500',
     lineHeight: 0,
     border: '2px solid transparent',
@@ -22,6 +26,33 @@ export const HeaderContainer = styled('header', {
       transition: '0.2s',
       cursor: 'pointer',
       border: '2px solid $green500',
+    },
+
+    div: {
+      position: 'absolute',
+      '&::after': {
+        content: 'attr(data-after)',
+        position: 'relative',
+        top: '-1.5rem',
+        right: '-1.5rem',
+        width: '1.5rem',
+        height: '1.5rem',
+        borderRadius: '50%',
+        border: '3px solid $gray900',
+
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        fontSize: '0.75rem',
+        fontWeight: 'bold',
+
+        textAlign: 'center',
+        letterSpacing: '-0.06rem',
+
+        color: '$gray100',
+        background: '$green500',
+      },
     },
   },
 })
