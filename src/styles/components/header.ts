@@ -28,7 +28,7 @@ export const HeaderContainer = styled('header', {
       border: '2px solid $green500',
     },
 
-    div: {
+    'div:not([data-after="0"])': {
       position: 'absolute',
       '&::after': {
         content: 'attr(data-after)',

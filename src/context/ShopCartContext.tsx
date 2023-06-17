@@ -7,6 +7,7 @@ interface ProductProps {
   name: string
   imageUrl: string
   price: string
+  defaultPriceId: string
 }
 
 interface ShopCartContextType {
