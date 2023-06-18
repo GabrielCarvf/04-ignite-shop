@@ -31,7 +31,7 @@ A criação dessa aplicação foi com o intuito de praticar e aprender mais sobr
 
 ## Projeto
 
-Utilizado o Next.js para geração da aplicação e para estilização foi utilizado a biblioteca Stitches.
+Utilizado o Next.js para geração da aplicação e para estilização foi utilizada a biblioteca Stitches.
 
 Esse projeto foi desenvolvido durante o curso Ignite da [Rocketseat](https://rocketseat.com.br/).
 
