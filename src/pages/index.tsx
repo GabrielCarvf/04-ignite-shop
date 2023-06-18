@@ -15,6 +15,7 @@ import { Handbag } from '@phosphor-icons/react'
 import { useContext } from 'react'
 import { ShopCartContext } from '../context/ShopCartContext'
 import { v4 as uuidv4 } from 'uuid'
+import Header from '../components/Header'
 
 interface HomeProps {
   products: {
@@ -46,6 +47,8 @@ export default function Home({ products }: HomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
+
+      <Header />
 
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {

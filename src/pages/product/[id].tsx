@@ -14,6 +14,7 @@ import {
   ProductContainer,
   ProductDetails,
 } from '@/src/styles/pages/product'
+import Header from '@/src/components/Header'
 
 interface ProductProps {
   product: {
@@ -38,6 +39,8 @@ export default function Product({ product }: ProductProps) {
       <Head>
         <title>{product.name} | Ignite Shop</title>
       </Head>
+
+      <Header />
 
       <ProductContainer>
         <ImageContainer>

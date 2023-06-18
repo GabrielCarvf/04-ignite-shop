@@ -3,7 +3,6 @@ import { GlobalStyles } from '../styles/global'
 import { Container } from '../styles/pages/app'
 
 import Sidebar from '../components/Sidebar'
-import Header from '../components/Header'
 
 import { ShopCartContextProvider } from '../context/ShopCartContext'
 
@@ -14,7 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
     <Container>
       <ShopCartContextProvider>
         <Sidebar />
-        <Header />
         <Component {...pageProps} />
       </ShopCartContextProvider>
     </Container>

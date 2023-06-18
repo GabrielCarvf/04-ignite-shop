@@ -1,6 +1,7 @@
 import { HeaderContainer } from '../styles/components/header'
 import logoImg from '../assets/logo_ignite_shop.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { Handbag } from '@phosphor-icons/react'
 import { ShopCartContext } from '../context/ShopCartContext'
@@ -15,7 +16,9 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <Image src={logoImg} alt="" />
+      <Link href="/">
+        <Image src={logoImg} alt="" />
+      </Link>
 
       <button onClick={handleShowShopCart}>
         <div data-after={shopCartProducts.length}></div>

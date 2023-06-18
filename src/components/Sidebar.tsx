@@ -110,7 +110,9 @@ export default function Sidebar() {
             </ValueInfoContainer>
           </InfosContainer>
           <button
-            disabled={isCreatingCheckoutSession}
+            disabled={
+              isCreatingCheckoutSession || shopCartProducts.length === 0
+            }
             onClick={handleBuyProducts}
           >
             Finalizar compra
